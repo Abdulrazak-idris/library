@@ -12,6 +12,7 @@
 
 body {
     color: var(--primary-color);
+    max-width: 2000px;
 }
 
 .container {
@@ -53,7 +54,8 @@ header {
 .btn-newBook:hover, 
 .btn-addNewBook:hover, 
 .btn-delete:hover, 
-.btn-read:hover {
+.btn-read:hover,
+.btn-edit:hover {
     transform: scale(1.1);
 }
 

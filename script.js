@@ -1,11 +1,15 @@
-function Book(title, author, pages, read) {
+function Book(title, author, pages, readStatus) {
+    if (!new.target) {
+        throw Error("You must use the 'New' operator to call the constructor.");
+    }
     this.title = title;
     this.author = author;
     this.pages = pages;
-    this.read = read;
-    this.info = function () {
-        return `${this.title} by ${this.author}, ${this.pages} pages ${this.read}`
-    }
+    this.readStatus = readStatus;
+}
+
+Book.prototype.info = function () {
+    return `${this.title} by ${this.author}, ${this.pages} pages ${this.readStatus}`
 }
 
 // My array of books.
@@ -16,8 +20,9 @@ function addBookToLibrary(book) {
     myLibrary.push(book)
 }
 
-// Input form
+// Save a Book.
 const btn = document.querySelector(".btn-addNewBook");
+const form = document.querySelector(".form");
 btn.addEventListener("click", (event) => {
     const inputs = document.querySelectorAll("input");
     const arrayOfInputs = Array.from(inputs);
@@ -25,14 +30,15 @@ btn.addEventListener("click", (event) => {
     for (const input of arrayOfInputs) {
         if (input.value) {
             inputValues.push(input.value);
-            input.value = "";
         } else {
-            alert(`Nothing Entered in ${input.previousElementSibling.innerHTML}`)
+            return;
         }
     }
+    form.reset()
 
-    //New Book.
+    //New Book instance.
     const currentBook = new Book(...inputValues);
+    currentBook.id = crypto.randomUUID();
 
     // addBookToLibrary
     addBookToLibrary(currentBook)
@@ -41,14 +47,12 @@ btn.addEventListener("click", (event) => {
 
     // Delete book.
     const deleteBtns = document.querySelectorAll(".btn-delete");
-    const readBtns = document.querySelectorAll(".btn-read");
-    const readBtn = Array.from(readBtns);
     const deleteBtn = Array.from(deleteBtns);
     for (const btn of deleteBtn) {
-        btn.addEventListener("click", (event) => {
-            const parent = event.target.parentNode;
-            const grandParent = parent.parentNode;
-            grandParent.remove();
+    btn.addEventListener("click", (event) => {
+        const parent = event.target.parentNode;
+        const grandParent = parent.parentNode;
+        grandParent.remove();
         })
     }
 
@@ -86,7 +90,7 @@ function showBooks(library) {
         readBtn.classList.add('btn', 'btn-read');
         newDiv.textContent = library[library.length - 1].info();
         dlt_btn.textContent = "Delete";
-        readBtn.textContent = "Read Status";
+        readBtn.textContent = "Edit";
         readOrDelete.appendChild(readBtn);
         readOrDelete.appendChild(dlt_btn);
         const childElements = [newDiv, readOrDelete];
