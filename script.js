@@ -88,7 +88,12 @@ function showBooks(library) {
         readOrDelete.classList.add('readOrDelete-container');
         dlt_btn.classList.add('btn', 'btn-delete');
         readBtn.classList.add('btn', 'btn-read');
-        newDiv.textContent = library[library.length - 1].info();
+        const userInput = ["title", "author", "pages", "readStatus"];
+        userInput.forEach(item => {
+            const inputTest = document.createElement("div");
+            inputTest.textContent = `${item} : ${library[0][item]}`;
+            newDiv.appendChild(inputTest);
+        });
         dlt_btn.textContent = "Delete";
         readBtn.textContent = "Edit";
         readOrDelete.appendChild(readBtn);
