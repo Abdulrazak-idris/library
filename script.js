@@ -91,7 +91,7 @@ function showBooks(library) {
         const userInput = ["title", "author", "pages", "readStatus"];
         userInput.forEach(item => {
             const inputTest = document.createElement("div");
-            inputTest.textContent = `${item} : ${library[0][item]}`;
+            inputTest.textContent = `${item} :: ${library[0][item]}`;
             newDiv.appendChild(inputTest);
         });
         dlt_btn.textContent = "Delete";
