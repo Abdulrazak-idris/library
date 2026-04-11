@@ -24,7 +24,7 @@ function addBookToLibrary(book) {
 const btn = document.querySelector(".btn-addNewBook");
 const form = document.querySelector(".form");
 btn.addEventListener("click", (event) => {
-    const inputs = document.querySelectorAll("input");
+    const inputs = form.querySelectorAll("input");
     const arrayOfInputs = Array.from(inputs);
     const inputValues = [];
     for (const input of arrayOfInputs) {
@@ -44,29 +44,9 @@ btn.addEventListener("click", (event) => {
     addBookToLibrary(currentBook)
     
     showBooks(myLibrary)
-
-    // Delete book.
-    const deleteBtns = document.querySelectorAll(".btn-delete");
-    const deleteBtn = Array.from(deleteBtns);
-    for (const btn of deleteBtn) {
-    btn.addEventListener("click", (event) => {
-        const parent = event.target.parentNode;
-        const grandParent = parent.parentNode;
-        grandParent.remove();
-        })
-    }
-
-    // Edit btn
-    const editBtns = document.querySelectorAll(".btn-edit");
-    const editBtn = Array.from(editBtns);
-    for (const btn of editBtn) {
-        btn.addEventListener("click", (e) => {
-            // Edit dialog
-            
-        })
-    }
-
+    
     event.preventDefault();
+
 })
 
 // Slide out form input.
@@ -88,29 +68,50 @@ newBook.addEventListener("click", function () {
 //Display each book.
 function showBooks(library) {
     const page = document.querySelector(".page");
-        const cardContainer = document.createElement("div");
-        const newDiv = document.createElement("div");
-        const readOrDelete = document.createElement("div");
-        const dlt_btn = document.createElement("button");
-        const readBtn = document.createElement("button");
-        cardContainer.classList.add('card-container');
-        newDiv.classList.add('card');
-        readOrDelete.classList.add('readOrDelete-container');
-        dlt_btn.classList.add('btn', 'btn-delete');
-        readBtn.classList.add('btn', 'btn-edit');
-        const userInput = ["title", "author", "pages", "readStatus"];
-        userInput.forEach(item => {
-            const inputTest = document.createElement("div");
-            inputTest.textContent = `${item} :: ${library[0][item]}`;
-            newDiv.appendChild(inputTest);
-        });
-        dlt_btn.textContent = "Delete";
-        readBtn.textContent = "Edit";
-        readOrDelete.appendChild(readBtn);
-        readOrDelete.appendChild(dlt_btn);
-        const childElements = [newDiv, readOrDelete];
-        for (let i = 0; i < childElements.length; i++) {
-            cardContainer.appendChild(childElements[i]);
-        }
-        page.appendChild(cardContainer);
+        page.innerHTML = "";
+
+        library.forEach((book) => {
+            const cardContainer = document.createElement("div");
+            const newDiv = document.createElement("div");
+            const readOrDelete = document.createElement("div");
+            const dlt_btn = document.createElement("button");
+            const readBtn = document.createElement("button");
+
+            cardContainer.classList.add('card-container');
+            newDiv.classList.add('card');
+            readOrDelete.classList.add('readOrDelete-container');
+            dlt_btn.classList.add('btn', 'btn-delete');
+            readBtn.classList.add('btn', 'btn-edit');
+
+            const userInput = ["title", "author", "pages", "readStatus"];
+
+            userInput.forEach(item => {
+                const inputTest = document.createElement("div");
+                inputTest.textContent = `${item} :: ${book[item]}`;
+                newDiv.appendChild(inputTest);
+            });
+
+            dlt_btn.textContent = "Delete";
+            readBtn.textContent = "Edit";
+
+            readOrDelete.appendChild(readBtn);
+            readOrDelete.appendChild(dlt_btn);
+
+            const childElements = [newDiv, readOrDelete];
+            for (let i = 0; i < childElements.length; i++) {
+                cardContainer.appendChild(childElements[i]);
+            }
+            page.appendChild(cardContainer);
+
+        })
 }
+
+// Delete or Edit a Book
+document.querySelector(".page").addEventListener("click", (e) => {
+    if (e.target.classList.contains("btn-delete")) {
+        e.target.closest(".card-container").remove();
+    } else if (e.target.classList.contains("btn-edit")) {
+        const dialogBox = document.querySelector(".edit-dialog")
+        dialogBox.showModal();
+    }
+});
