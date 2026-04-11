@@ -56,6 +56,16 @@ btn.addEventListener("click", (event) => {
         })
     }
 
+    // Edit btn
+    const editBtns = document.querySelectorAll(".btn-edit");
+    const editBtn = Array.from(editBtns);
+    for (const btn of editBtn) {
+        btn.addEventListener("click", (e) => {
+            // Edit dialog
+            
+        })
+    }
+
     event.preventDefault();
 })
 
@@ -87,7 +97,7 @@ function showBooks(library) {
         newDiv.classList.add('card');
         readOrDelete.classList.add('readOrDelete-container');
         dlt_btn.classList.add('btn', 'btn-delete');
-        readBtn.classList.add('btn', 'btn-read');
+        readBtn.classList.add('btn', 'btn-edit');
         const userInput = ["title", "author", "pages", "readStatus"];
         userInput.forEach(item => {
             const inputTest = document.createElement("div");
