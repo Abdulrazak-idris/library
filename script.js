@@ -38,7 +38,6 @@ btn.addEventListener("click", (event) => {
 
     //New Book instance.
     const currentBook = new Book(...inputValues);
-    currentBook.id = crypto.randomUUID();
 
     // addBookToLibrary
     addBookToLibrary(currentBook)
@@ -72,6 +71,7 @@ function showBooks(library) {
 
         library.forEach((book) => {
             const cardContainer = document.createElement("div");
+            cardContainer.dataset.id = crypto.randomUUID();
             const newDiv = document.createElement("div");
             const readOrDelete = document.createElement("div");
             const dlt_btn = document.createElement("button");
@@ -87,7 +87,7 @@ function showBooks(library) {
 
             userInput.forEach(item => {
                 const inputTest = document.createElement("div");
-                inputTest.textContent = `${item} :: ${book[item]}`;
+                inputTest.textContent = `${item} -- ${book[item]}`;
                 newDiv.appendChild(inputTest);
             });
 
@@ -110,6 +110,12 @@ function showBooks(library) {
 document.querySelector(".page").addEventListener("click", (e) => {
     if (e.target.classList.contains("btn-delete")) {
         e.target.closest(".card-container").remove();
+
+        // Remove from list also.
+        // updatedLibrary = myLibrary.filter((item => {
+        //     item.id !== 
+        // }))
+
     } else if (e.target.classList.contains("btn-edit")) {
         const dialogBox = document.querySelector(".edit-dialog")
         dialogBox.showModal();
