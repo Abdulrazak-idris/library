@@ -12,8 +12,10 @@ Book.prototype.info = function () {
     return `${this.title} by ${this.author}, ${this.pages} pages ${this.readStatus}`
 }
 
+const userInput = ["title", "author", "pages", "readStatus"];
+
 // My array of books.
-const myLibrary = [];
+let myLibrary = [];
 
 // Get all Books.
 function addBookToLibrary(book) {
@@ -84,7 +86,6 @@ function showBooks(library) {
             dlt_btn.classList.add('btn', 'btn-delete');
             readBtn.classList.add('btn', 'btn-edit');
 
-            const userInput = ["title", "author", "pages", "readStatus", "id"];
 
             userInput.forEach(item => {
                 const inputTest = document.createElement("div");
@@ -107,17 +108,51 @@ function showBooks(library) {
         })
 }
 
+const dialogBox = document.querySelector(".edit-dialog")
+let containerId;
+
 // Delete or Edit a Book
 document.querySelector(".page").addEventListener("click", (e) => {
+    const card = e.target.closest(".card-container");
+    if (!card) return;
+
+    const id = card.dataset.id;
+
+
     if (e.target.classList.contains("btn-delete")) {
         e.target.closest(".card-container").remove();
         
-        // Remove from list also.
-        const id = e.target.closest(".card-container").dataset.id;
+        // Remove item from list also.
         myLibrary = myLibrary.filter(item => item.id !== id)
 
     } else if (e.target.classList.contains("btn-edit")) {
-        const dialogBox = document.querySelector(".edit-dialog")
         dialogBox.showModal();
+        containerId = id;
+
+        const book = myLibrary.find(item => item.id === id);
+        const inputs = dialogBox.querySelectorAll("input");
+
+        userInput.forEach((key, index) => {
+        inputs[index].value = book[key];
+    });
     }
+});
+
+
+const editForm = document.querySelector(".edit-form");
+
+editForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const inputs = editForm.querySelectorAll("input");
+    const book = myLibrary.find(item => item.id === containerId);
+
+    if (book) {
+        userInput.forEach((key, index) => {
+            book[key] = inputs[index].value;
+        });
+    }
+
+    showBooks(myLibrary);
+    dialogBox.close();
 });

@@ -31,8 +31,8 @@
                     </div>
 
                     <div class="form-detail">
-                        <Label for="read">Read Status</Label>
-                        <input type="text" id="read" placeholder="Read or Not Read" required>
+                        <Label for="readStatus">Read Status</Label>
+                        <input type="text" id="readStatus" placeholder="Read or Not Read" required>
                     </div>
                     
                     <button type="submit" class="btn btn-addNewBook">Save Book</button>
@@ -56,31 +56,31 @@
             <div class="page"></div>
 
             <dialog class="edit-dialog">
+                <h2>You can edit now</h2>
                 <div class="dialog-content">
-                    <h2>You can edit now</h2>
     
                     <form class="edit-form">
                         <div class="form-group">
                             <label for="title">Title</label>
-                            <input type="text" id="title" placeholder="Title">
+                            <input type="text" id="title" placeholder="Title" required>
                         </div>
     
                         <div class="form-group">
                             <label for="author">Author</label>
-                            <input type="text" id="author" placeholder="Author">
+                            <input type="text" id="author" placeholder="Author" required>
                         </div>
 
                         <div class="form-group">
                             <label for="pages">Pages</label>
-                            <input type="text" id="pages" placeholder="Pages">
+                            <input type="number" id="pages" placeholder="Pages" required>
                         </div>
 
                         <div class="form-group">
                             <label for="readStatus">Read Status</label>
-                            <input type="text" id="readStatus" placeholder="Read Status">
+                            <input type="text" id="readStatus" placeholder="Read Status" required>
                         </div>
 
-                        <button type="submit">Save</button>
+                        <button type="submit" class="edit-btn">Save</button>
                     </form>
     
                 </div>
