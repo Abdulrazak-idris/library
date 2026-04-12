@@ -38,6 +38,7 @@ btn.addEventListener("click", (event) => {
 
     //New Book instance.
     const currentBook = new Book(...inputValues);
+    currentBook.id = crypto.randomUUID();
 
     // addBookToLibrary
     addBookToLibrary(currentBook)
@@ -71,7 +72,7 @@ function showBooks(library) {
 
         library.forEach((book) => {
             const cardContainer = document.createElement("div");
-            cardContainer.dataset.id = crypto.randomUUID();
+            cardContainer.dataset.id = book.id;
             const newDiv = document.createElement("div");
             const readOrDelete = document.createElement("div");
             const dlt_btn = document.createElement("button");
@@ -83,7 +84,7 @@ function showBooks(library) {
             dlt_btn.classList.add('btn', 'btn-delete');
             readBtn.classList.add('btn', 'btn-edit');
 
-            const userInput = ["title", "author", "pages", "readStatus"];
+            const userInput = ["title", "author", "pages", "readStatus", "id"];
 
             userInput.forEach(item => {
                 const inputTest = document.createElement("div");
@@ -110,11 +111,10 @@ function showBooks(library) {
 document.querySelector(".page").addEventListener("click", (e) => {
     if (e.target.classList.contains("btn-delete")) {
         e.target.closest(".card-container").remove();
-
+        
         // Remove from list also.
-        // updatedLibrary = myLibrary.filter((item => {
-        //     item.id !== 
-        // }))
+        const id = e.target.closest(".card-container").dataset.id;
+        myLibrary = myLibrary.filter(item => item.id !== id)
 
     } else if (e.target.classList.contains("btn-edit")) {
         const dialogBox = document.querySelector(".edit-dialog")
